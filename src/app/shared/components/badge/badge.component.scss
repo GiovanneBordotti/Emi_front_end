@@ -1,0 +1,57 @@
+.emi-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--emi-radius-full);
+  line-height: 1;
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  &--success {
+    background-color: var(--emi-positive-bg);
+    color: var(--emi-positive-text);
+    .emi-badge__dot {
+      background-color: var(--emi-positive);
+    }
+  }
+
+  &--warning {
+    background-color: var(--emi-neutral-bg);
+    color: var(--emi-neutral-text);
+    .emi-badge__dot {
+      background-color: var(--emi-neutral);
+    }
+  }
+
+  &--danger {
+    background-color: var(--emi-negative-bg);
+    color: var(--emi-negative-text);
+    .emi-badge__dot {
+      background-color: var(--emi-negative);
+    }
+  }
+
+  &--info {
+    background-color: var(--emi-info-bg);
+    color: var(--emi-info-text);
+    .emi-badge__dot {
+      background-color: var(--emi-info);
+    }
+  }
+
+  &--neutral {
+    background-color: #f1f5f9;
+    color: #475569;
+    .emi-badge__dot {
+      background-color: #94a3b8;
+    }
+  }
+}
+

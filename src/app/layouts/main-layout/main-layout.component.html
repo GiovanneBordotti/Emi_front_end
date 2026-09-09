@@ -1,0 +1,67 @@
+<div class="emi-app-layout">
+  <!-- Dark Sidebar (Figura 8) -->
+  <aside class="emi-sidebar" [class.emi-sidebar--collapsed]="!isSidebarOpen()">
+    <!-- Top Branding -->
+    <div class="emi-sidebar__brand">
+      <div class="emi-brand-logo">
+        <svg class="emi-brand-icon" viewBox="0 0 36 36" fill="none">
+          <rect width="36" height="36" rx="9" fill="#E50914" />
+          <polygon points="15 11 26 18 15 25 15 11" fill="#FFFFFF" />
+        </svg>
+        <div class="emi-brand-info">
+          <span class="emi-brand-name">EMI</span>
+          <span class="emi-brand-desc">YouTube Social Listening</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="emi-sidebar__nav">
+      <ul class="emi-nav-list">
+        @for (item of navItems; track item.route) {
+          <li class="emi-nav-item">
+            <a
+              [routerLink]="item.route"
+              routerLinkActive="emi-nav-link--active"
+              class="emi-nav-link"
+            >
+              <span class="emi-nav-icon">
+                <emi-icon [name]="item.icon" [size]="19"></emi-icon>
+              </span>
+              <span class="emi-nav-label">{{ item.label }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <!-- Sidebar Bottom: User & Logout -->
+    <div class="emi-sidebar__footer">
+      <div class="emi-user-profile">
+        <div class="emi-user-avatar">
+          {{ currentUser()?.name?.charAt(0) || 'U' }}
+        </div>
+        <div class="emi-user-meta">
+          <span class="emi-user-name">{{ currentUser()?.name }}</span>
+          <span class="emi-user-role">{{ currentUser()?.role }}</span>
+        </div>
+      </div>
+      <button
+        class="emi-btn-logout"
+        (click)="logout()"
+        title="Encerrar sessão"
+        aria-label="Encerrar sessão"
+      >
+        <emi-icon name="logout" [size]="18"></emi-icon>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main View Area -->
+  <div class="emi-main-wrapper">
+    <main class="emi-main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+

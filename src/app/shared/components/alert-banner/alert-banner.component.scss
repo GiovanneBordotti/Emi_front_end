@@ -1,0 +1,53 @@
+.emi-alert-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.125rem;
+  border-radius: var(--emi-radius-md);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  border: 1px solid transparent;
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__text {
+    flex: 1;
+    font-weight: 500;
+  }
+
+  &--warning {
+    background-color: #fff1f2;
+    border-color: #fecdd3;
+    color: #9f1239;
+
+    .emi-alert-banner__icon {
+      color: #e11d48;
+    }
+  }
+
+  &--danger {
+    background-color: var(--emi-negative-bg);
+    border-color: #fca5a5;
+    color: var(--emi-negative-text);
+
+    .emi-alert-banner__icon {
+      color: var(--emi-negative);
+    }
+  }
+
+  &--info {
+    background-color: var(--emi-info-bg);
+    border-color: #bfdbfe;
+    color: var(--emi-info-text);
+
+    .emi-alert-banner__icon {
+      color: var(--emi-info);
+    }
+  }
+}
+

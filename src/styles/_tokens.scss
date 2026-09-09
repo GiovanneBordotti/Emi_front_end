@@ -1,0 +1,70 @@
+// Design Tokens - EMI YouTube Analytics
+:root {
+  // Brand Colors (YouTube & EMI Identity)
+  --emi-primary: #e50914;
+  --emi-primary-hover: #c70812;
+  --emi-primary-active: #a5060f;
+  --emi-primary-light: #fef2f2;
+  --emi-primary-subtle: rgba(229, 9, 20, 0.08);
+  --emi-primary-border: rgba(229, 9, 20, 0.25);
+
+  // Neutral Colors & Surfaces
+  --emi-bg-page: #f4f6f8;
+  --emi-bg-card: #ffffff;
+  --emi-bg-subtle: #f8fafc;
+  --emi-border: #e2e8f0;
+  --emi-border-subtle: #edf2f7;
+  --emi-border-focus: #e50914;
+
+  // Dark Sidebar & Controls (as in Figura 8)
+  --emi-sidebar-bg: #12161b;
+  --emi-sidebar-surface: #1a2027;
+  --emi-sidebar-border: #242c36;
+  --emi-sidebar-text: #94a3b8;
+  --emi-sidebar-text-active: #ffffff;
+  --emi-sidebar-hover: rgba(255, 255, 255, 0.06);
+  --emi-sidebar-active: rgba(229, 9, 20, 0.15);
+
+  // Typography
+  --emi-font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --emi-text-primary: #0f172a;
+  --emi-text-secondary: #475569;
+  --emi-text-muted: #94a3b8;
+  --emi-text-white: #ffffff;
+
+  // Sentiment & Feedback Status
+  --emi-positive: #10b981;
+  --emi-positive-bg: #ecfdf5;
+  --emi-positive-text: #065f46;
+
+  --emi-neutral: #f59e0b;
+  --emi-neutral-bg: #fffbeb;
+  --emi-neutral-text: #92400e;
+
+  --emi-negative: #ef4444;
+  --emi-negative-bg: #fef2f2;
+  --emi-negative-text: #991b1b;
+
+  --emi-info: #3b82f6;
+  --emi-info-bg: #eff6ff;
+  --emi-info-text: #1e40af;
+
+  // Spacing & Border Radius
+  --emi-radius-xs: 4px;
+  --emi-radius-sm: 6px;
+  --emi-radius-md: 10px;
+  --emi-radius-lg: 14px;
+  --emi-radius-xl: 20px;
+  --emi-radius-full: 9999px;
+
+  // Shadows
+  --emi-shadow-xs: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+  --emi-shadow-sm: 0 1px 3px 0 rgba(16, 24, 40, 0.1), 0 1px 2px -1px rgba(16, 24, 40, 0.1);
+  --emi-shadow-card: 0 4px 14px 0 rgba(0, 0, 0, 0.03), 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+  --emi-shadow-lg: 0 12px 30px -4px rgba(0, 0, 0, 0.08), 0 4px 10px -2px rgba(0, 0, 0, 0.03);
+
+  // Transitions
+  --emi-transition-fast: 0.15s ease;
+  --emi-transition-normal: 0.25s ease;
+}
+

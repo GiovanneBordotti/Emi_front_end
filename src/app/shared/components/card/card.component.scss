@@ -1,0 +1,43 @@
+.emi-card {
+  background-color: var(--emi-bg-card);
+  border-radius: var(--emi-radius-lg);
+  border: 1px solid var(--emi-border);
+  box-shadow: var(--emi-shadow-card);
+  overflow: hidden;
+  transition: box-shadow var(--emi-transition-normal), border-color var(--emi-transition-normal);
+
+  &:hover {
+    box-shadow: var(--emi-shadow-sm);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--emi-border-subtle);
+  }
+
+  &__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--emi-text-primary);
+  }
+
+  &__subtitle {
+    font-size: 0.8125rem;
+    color: var(--emi-text-secondary);
+    margin-top: 0.15rem;
+  }
+
+  &__content {
+    padding: 1.5rem;
+  }
+
+  &--no-padding {
+    .emi-card__content {
+      padding: 0;
+    }
+  }
+}
+

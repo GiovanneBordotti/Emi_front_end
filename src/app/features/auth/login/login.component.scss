@@ -1,0 +1,99 @@
+.emi-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 20%, #ffffff 0%, #f1f5f9 100%);
+  padding: 1.5rem;
+}
+
+.emi-login-container {
+  width: 100%;
+  max-width: 420px;
+}
+
+.emi-login-card {
+  background: #ffffff;
+  border-radius: var(--emi-radius-xl);
+  border: 1px solid var(--emi-border);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.07), 0 0 1px 1px rgba(0, 0, 0, 0.02);
+  padding: 2.75rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.emi-login-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.emi-logo-badge {
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 4px 10px rgba(229, 9, 20, 0.25));
+
+  .emi-play-svg {
+    width: 52px;
+    height: 52px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    &:hover {
+      transform: scale(1.06);
+    }
+  }
+}
+
+.emi-login-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--emi-text-primary);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+}
+
+.emi-login-subtitle {
+  font-size: 0.8125rem;
+  color: var(--emi-text-secondary);
+  line-height: 1.4;
+}
+
+.emi-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-action {
+  margin-top: 0.5rem;
+}
+
+.emi-login-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: var(--emi-negative-bg);
+  border: 1px solid #fca5a5;
+  border-radius: var(--emi-radius-md);
+  color: var(--emi-negative-text);
+  font-size: 0.8125rem;
+}
+
+.emi-login-footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--emi-text-muted);
+  border-top: 1px solid var(--emi-border-subtle);
+  padding-top: 1.25rem;
+}
+

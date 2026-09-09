@@ -1,0 +1,270 @@
+<div class="emi-dashboard">
+  <!-- Toast Notification -->
+  @if (successToast()) {
+    <div class="emi-toast">
+      <emi-icon name="check-circle" [size]="18"></emi-icon>
+      <span>{{ successToast() }}</span>
+    </div>
+  }
+
+  <!-- Header Section (Figura 8) -->
+  <header class="emi-dashboard__header">
+    <div class="emi-dashboard__title-group">
+      <h1 class="emi-dashboard__title">Dashboard de Análise</h1>
+      <p class="emi-dashboard__subtitle">
+        Monitoramento de comentários do YouTube com classificação de sentimento
+      </p>
+    </div>
+    <div class="emi-dashboard__header-actions">
+      <emi-button variant="primary" size="md" (clicked)="focusNewModel()">
+        <emi-icon name="plus" [size]="16"></emi-icon>
+        <span>+ Novo Modelo</span>
+      </emi-button>
+    </div>
+  </header>
+
+  <!-- 4 KPI Summary Cards (Figura 8) -->
+  <section class="emi-dashboard__kpis">
+    <emi-stat-card
+      title="Comentários analisados"
+      [value]="metrics().totalAnalyzedComments.toLocaleString('pt-BR')"
+      iconName="message"
+      iconTheme="default"
+    ></emi-stat-card>
+
+    <emi-stat-card
+      title="Sentimento positivo"
+      [value]="metrics().positivePercent + '%'"
+      iconName="trending-up"
+      iconTheme="positive"
+    ></emi-stat-card>
+
+    <emi-stat-card
+      title="Sentimento negativo"
+      [value]="metrics().negativePercent + '%'"
+      iconName="trending-down"
+      iconTheme="negative"
+    ></emi-stat-card>
+
+    <emi-stat-card
+      title="Execuções concluídas"
+      [value]="metrics().completedExecutions"
+      iconName="check-circle"
+      iconTheme="info"
+    ></emi-stat-card>
+  </section>
+
+  <!-- Middle Grid: Distribuição de Sentimentos & Temas Recorrentes (Figura 8) -->
+  <section class="emi-dashboard__middle-grid">
+    <!-- Distribuição de Sentimentos -->
+    <emi-card title="Distribuição de Sentimentos">
+      <div class="emi-sentiment-distribution">
+        <emi-sentiment-bar
+          label="Positivo"
+          [percentage]="metrics().sentimentDistribution.positive"
+          type="positive"
+        ></emi-sentiment-bar>
+
+        <emi-sentiment-bar
+          label="Neutro"
+          [percentage]="metrics().sentimentDistribution.neutral"
+          type="neutral"
+        ></emi-sentiment-bar>
+
+        <emi-sentiment-bar
+          label="Negativo"
+          [percentage]="metrics().sentimentDistribution.negative"
+          type="negative"
+        ></emi-sentiment-bar>
+      </div>
+    </emi-card>
+
+    <!-- Temas recorrentes -->
+    <emi-card title="Temas recorrentes">
+      <div class="emi-topics-wrapper">
+        <div class="emi-topics-cloud">
+          @for (topic of metrics().recurringTopics; track topic) {
+            <span class="emi-topic-chip">{{ topic }}</span>
+          }
+        </div>
+
+        @if (metrics().alert) {
+          <div class="emi-topic-alert-area">
+            <emi-alert-banner [type]="metrics().alert!.type">
+              {{ metrics().alert!.message }}
+            </emi-alert-banner>
+          </div>
+        }
+      </div>
+    </emi-card>
+  </section>
+
+  <!-- Bottom Grid: Criar modelo de análise & Modelos cadastrados (Figura 8) -->
+  <section class="emi-dashboard__bottom-grid">
+    <!-- Criar modelo de análise por Link do YouTube -->
+    <emi-card title="Criar modelo de análise" subtitle="Informe o link do vídeo da pessoa/marca para coletar e analisar com IA">
+      <form [formGroup]="modelForm" (ngSubmit)="onSaveModel()" class="emi-model-form">
+        <!-- Campo Principal: Link do Vídeo do YouTube -->
+        <div class="form-row form-row--url">
+          <div class="form-field form-field--full">
+            <label class="form-label" for="videoUrlInput">
+              <span>Link / URL do Vídeo no YouTube</span>
+              <span class="form-badge-api">YouTube Data API</span>
+            </label>
+            <div class="input-with-action">
+              <input
+                id="videoUrlInput"
+                type="url"
+                class="form-input"
+                placeholder="https://www.youtube.com/watch?v=..."
+                formControlName="videoUrl"
+              />
+              <button
+                type="button"
+                class="btn-fetch-video"
+                (click)="onFetchVideoPreview()"
+                [disabled]="isLoadingVideo()"
+              >
+                @if (isLoadingVideo()) {
+                  <span>Buscando...</span>
+                } @else {
+                  <emi-icon name="search" [size]="14"></emi-icon>
+                  <span>Carregar Vídeo</span>
+                }
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pré-visualização do Vídeo se carregado -->
+        @if (previewVideo(); as p) {
+          <div class="video-preview-badge">
+            <img [src]="p.thumbnailUrl" alt="Thumbnail" class="preview-thumb" />
+            <div class="preview-meta">
+              <span class="preview-channel">{{ p.channelTitle }}</span>
+              <span class="preview-title">{{ p.title }}</span>
+              <span class="preview-stats">
+                {{ p.viewCount.toLocaleString('pt-BR') }} views • {{ p.commentCount }} comentários disponíveis
+              </span>
+            </div>
+          </div>
+        }
+
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label" for="modelNameInput">Nome da Análise</label>
+            <input
+              id="modelNameInput"
+              type="text"
+              class="form-input"
+              placeholder="Ex: Campanha Smartphone 2026"
+              formControlName="name"
+            />
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="videoTypeSelect">Tipo de Vídeo</label>
+            <select id="videoTypeSelect" class="form-input form-select" formControlName="videoType">
+              <option value="Propaganda / Campanha">Propaganda / Campanha</option>
+              <option value="Review de Produto">Review de Produto</option>
+              <option value="Institucional">Institucional</option>
+              <option value="Vídeo de Criador / Influenciador">Vídeo de Criador / Influenciador</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label" for="excludedWordsInput">Palavras excluídas (opcional)</label>
+            <input
+              id="excludedWordsInput"
+              type="text"
+              class="form-input"
+              placeholder="Ex: sorteio, spam"
+              formControlName="excludedWords"
+            />
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="excludedChannelsInput">Canais excluídos (opcional)</label>
+            <input
+              id="excludedChannelsInput"
+              type="text"
+              class="form-input"
+              placeholder="Ex: bot, auto-reply"
+              formControlName="excludedChannels"
+            />
+          </div>
+        </div>
+
+        <div class="form-footer">
+          <emi-button type="submit" variant="dark" size="md" [loading]="isCreating()">
+            <emi-icon name="check" [size]="16"></emi-icon>
+            <span>Salvar e Iniciar Análise</span>
+          </emi-button>
+        </div>
+      </form>
+    </emi-card>
+
+    <!-- Modelos cadastrados -->
+    <emi-card title="Modelos cadastrados" subtitle="Clique para visualizar a análise detalhada com IA">
+      <div class="emi-models-list">
+        @for (item of models(); track item.id) {
+          <div class="emi-model-item" [routerLink]="['/analise', item.id]">
+            <div class="emi-model-item__left">
+              @if (item.videoMetadata?.thumbnailUrl) {
+                <img [src]="item.videoMetadata!.thumbnailUrl" alt="Thumbnail" class="item-thumb" />
+              } @else {
+                <div class="item-thumb-placeholder">
+                  <emi-icon name="youtube" [size]="18"></emi-icon>
+                </div>
+              }
+
+              <div class="emi-model-item__info">
+                <span class="emi-model-item__name">{{ item.name }}</span>
+                <span class="emi-model-item__meta">
+                  {{ item.videoMetadata?.channelTitle || 'Canal' }} • {{ item.videoMetadata?.commentCount || item.videoCount }} comentários
+                </span>
+              </div>
+            </div>
+
+            <div class="emi-model-item__right">
+              <emi-badge
+                [variant]="
+                  item.status === 'Ativo'
+                    ? 'success'
+                    : item.status === 'Pendente'
+                      ? 'warning'
+                      : 'neutral'
+                "
+              >
+                {{ item.status }}
+              </emi-badge>
+
+              <span class="btn-view-detail" title="Ver Análise Detalhada">
+                <span>Análise IA</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </span>
+
+              <button
+                type="button"
+                class="emi-model-btn-delete"
+                (click)="deleteModel($event, item.id)"
+                title="Remover modelo"
+                aria-label="Remover modelo"
+              >
+                <emi-icon name="trash" [size]="16"></emi-icon>
+              </button>
+            </div>
+          </div>
+        } @empty {
+          <div class="emi-models-empty">
+            <p>Nenhum modelo cadastrado no momento.</p>
+          </div>
+        }
+      </div>
+    </emi-card>
+  </section>
+</div>

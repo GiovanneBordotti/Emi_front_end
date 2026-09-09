@@ -1,0 +1,75 @@
+<div class="emi-login-page">
+  <div class="emi-login-container">
+    <div class="emi-login-card">
+      <!-- Logo & Branding (Figura 7) -->
+      <div class="emi-login-header">
+        <div class="emi-logo-badge">
+          <svg class="emi-play-svg" viewBox="0 0 48 48" fill="none">
+            <rect width="48" height="48" rx="14" fill="#E50914" />
+            <polygon points="20 15 34 24 20 33 20 15" fill="#FFFFFF" />
+          </svg>
+        </div>
+        <h1 class="emi-login-title">EMI YouTube Analytics</h1>
+        <p class="emi-login-subtitle">Análise automatizada de comentários com IA</p>
+      </div>
+
+      <!-- Login Form (Figura 7) -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="emi-login-form">
+        @if (errorMessage()) {
+          <div class="emi-login-alert">
+            <emi-icon name="alert" [size]="16"></emi-icon>
+            <span>{{ errorMessage() }}</span>
+          </div>
+        }
+
+        <div class="form-item">
+          <emi-input
+            label="E-mail"
+            type="email"
+            placeholder="usuario@email.com"
+            prefixIcon="mail"
+            formControlName="email"
+            [errorMessage]="
+              loginForm.get('email')?.touched && loginForm.get('email')?.invalid
+                ? 'Insira um e-mail válido'
+                : ''
+            "
+          ></emi-input>
+        </div>
+
+        <div class="form-item">
+          <emi-input
+            label="Senha"
+            type="password"
+            placeholder="••••••••"
+            prefixIcon="lock"
+            formControlName="password"
+            [errorMessage]="
+              loginForm.get('password')?.touched && loginForm.get('password')?.invalid
+                ? 'A senha deve ter no mínimo 6 caracteres'
+                : ''
+            "
+          ></emi-input>
+        </div>
+
+        <div class="form-action">
+          <emi-button
+            type="submit"
+            variant="primary"
+            size="lg"
+            [fullWidth]="true"
+            [loading]="loading()"
+          >
+            Entrar no sistema
+          </emi-button>
+        </div>
+      </form>
+
+      <!-- Rodapé discreto acadêmico -->
+      <div class="emi-login-footer">
+        <span>TCC Ciência da Computação • UNIP 2026</span>
+      </div>
+    </div>
+  </div>
+</div>
+

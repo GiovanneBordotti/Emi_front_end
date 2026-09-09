@@ -1,0 +1,49 @@
+<div class="emi-form-group">
+  @if (label()) {
+    <label class="emi-form-label">
+      {{ label() }}
+      @if (required()) {
+        <span class="emi-form-required">*</span>
+      }
+    </label>
+  }
+
+  <div
+    class="emi-input-wrapper"
+    [class.emi-input-wrapper--error]="!!errorMessage()"
+    [class.emi-input-wrapper--disabled]="disabled()"
+  >
+    @if (prefixIcon()) {
+      <div class="emi-input-icon emi-input-icon--prefix">
+        <emi-icon [name]="prefixIcon()!" [size]="18"></emi-icon>
+      </div>
+    }
+
+    <input
+      [type]="effectiveType"
+      [placeholder]="placeholder()"
+      [value]="value()"
+      [disabled]="disabled()"
+      (input)="onInput($event)"
+      (blur)="onTouched()"
+      class="emi-native-input"
+    />
+
+    @if (type() === 'password') {
+      <button
+        type="button"
+        class="emi-input-icon emi-input-icon--suffix emi-btn-eye"
+        (click)="togglePasswordVisibility()"
+        tabindex="-1"
+        [attr.aria-label]="isPasswordVisible() ? 'Ocultar senha' : 'Exibir senha'"
+      >
+        <emi-icon [name]="isPasswordVisible() ? 'eye-off' : 'eye'" [size]="18"></emi-icon>
+      </button>
+    }
+  </div>
+
+  @if (errorMessage()) {
+    <span class="emi-form-error">{{ errorMessage() }}</span>
+  }
+</div>
+

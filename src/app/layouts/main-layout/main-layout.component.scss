@@ -1,0 +1,233 @@
+.emi-app-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--emi-bg-page);
+}
+
+// Sidebar styles
+.emi-sidebar {
+  width: 260px;
+  background-color: var(--emi-sidebar-bg);
+  border-right: 1px solid var(--emi-sidebar-border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  transition: width var(--emi-transition-normal);
+
+  &__brand {
+    padding: 1.75rem 1.5rem;
+    border-bottom: 1px solid var(--emi-sidebar-border);
+  }
+
+  &__nav {
+    flex: 1;
+    padding: 1.5rem 1rem;
+    overflow-y: auto;
+  }
+
+  &__footer {
+    padding: 1.25rem 1.25rem;
+    border-top: 1px solid var(--emi-sidebar-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+
+.emi-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+
+  .emi-brand-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .emi-brand-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .emi-brand-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .emi-brand-desc {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--emi-sidebar-text);
+    margin-top: 2px;
+  }
+}
+
+.emi-nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.emi-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--emi-radius-md);
+  color: var(--emi-sidebar-text);
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all var(--emi-transition-fast);
+
+  &:hover {
+    background-color: var(--emi-sidebar-hover);
+    color: var(--emi-sidebar-text-active);
+  }
+
+  &--active {
+    background-color: var(--emi-sidebar-active);
+    color: #ffffff;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      bottom: 20%;
+      width: 3px;
+      border-radius: 0 4px 4px 0;
+      background-color: var(--emi-primary);
+    }
+
+    .emi-nav-icon {
+      color: var(--emi-primary);
+    }
+  }
+}
+
+.emi-nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emi-user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  overflow: hidden;
+}
+
+.emi-user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e50914, #991b1b);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.emi-user-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.emi-user-name {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.emi-user-role {
+  font-size: 0.6875rem;
+  color: var(--emi-sidebar-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.emi-btn-logout {
+  background: none;
+  border: none;
+  color: var(--emi-sidebar-text);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: var(--emi-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--emi-transition-fast);
+
+  &:hover {
+    background-color: var(--emi-sidebar-hover);
+    color: #ef4444;
+  }
+}
+
+// Main content area
+.emi-main-wrapper {
+  flex: 1;
+  margin-left: 260px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+.emi-main-content {
+  flex: 1;
+  padding: 2rem 2.5rem;
+}
+
+@media (max-width: 900px) {
+  .emi-sidebar {
+    width: 72px;
+
+    &__brand {
+      padding: 1.5rem 0.75rem;
+      justify-content: center;
+    }
+
+    .emi-brand-info, .emi-nav-label, .emi-user-meta {
+      display: none;
+    }
+
+    &__footer {
+      justify-content: center;
+      padding: 1rem 0.5rem;
+    }
+
+    .emi-btn-logout {
+      display: none;
+    }
+  }
+
+  .emi-main-wrapper {
+    margin-left: 72px;
+  }
+
+  .emi-main-content {
+    padding: 1.5rem;
+  }
+}
+
