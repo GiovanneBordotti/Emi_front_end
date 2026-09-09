@@ -1,0 +1,258 @@
+<div class="emi-detail-page">
+  @if (model(); as m) {
+    <!-- Navigation Top Bar -->
+    <header class="emi-detail-header">
+      <div class="emi-back-nav">
+        <a routerLink="/dashboard" class="emi-btn-back">
+          <emi-icon name="dashboard" [size]="16"></emi-icon>
+          <span>Voltar ao Dashboard</span>
+        </a>
+      </div>
+
+      <div class="emi-header-meta">
+        <div class="emi-title-wrapper">
+          <span class="emi-badge-ai">
+            <emi-icon name="youtube" [size]="16"></emi-icon>
+            YouTube Data API + Gemini AI
+          </span>
+          <h1 class="emi-detail-title">{{ m.name }}</h1>
+        </div>
+        <div class="emi-actions-row">
+          <emi-badge [variant]="m.status === 'Ativo' ? 'success' : 'warning'">
+            {{ m.status }}
+          </emi-badge>
+        </div>
+      </div>
+    </header>
+
+    <!-- YouTube Video Banner Card -->
+    @if (m.videoMetadata; as v) {
+      <section class="emi-video-card">
+        <div class="emi-video-card__thumbnail">
+          <img [src]="v.thumbnailUrl" [alt]="v.title" />
+          <div class="emi-play-badge">
+            <emi-icon name="play" [size]="20" color="#ffffff"></emi-icon>
+          </div>
+        </div>
+
+        <div class="emi-video-card__info">
+          <span class="emi-video-channel">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+            {{ v.channelTitle }}
+          </span>
+          <h2 class="emi-video-title">{{ v.title }}</h2>
+
+          <div class="emi-video-metrics-bar">
+            <div class="metric-item">
+              <span class="metric-label">Visualizações</span>
+              <span class="metric-value">{{ v.viewCount.toLocaleString('pt-BR') }}</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Curtidas</span>
+              <span class="metric-value">{{ v.likeCount.toLocaleString('pt-BR') }}</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Comentários Coletados</span>
+              <span class="metric-value">{{ v.commentCount.toLocaleString('pt-BR') }}</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Data de Publicação</span>
+              <span class="metric-value">{{ v.publishedAt }}</span>
+            </div>
+          </div>
+
+          <div class="emi-video-link-row">
+            <a [href]="v.videoUrl" target="_blank" rel="noopener noreferrer" class="emi-external-link">
+              <span>Abrir vídeo original no YouTube</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+    }
+
+    <!-- AI Intelligence Grid (Gemini API Insights) -->
+    @if (m.detailedAnalysis; as ai) {
+      <div class="emi-ai-sections-grid">
+        <!-- 1. Entendimento do Vídeo com IA -->
+        <emi-card title="Entendimento do Vídeo & Campanha" subtitle="Síntese estruturada via Gemini API">
+          <div class="emi-ai-card-content">
+            <div class="ai-block">
+              <span class="ai-block__tag">Resumo Executivo</span>
+              <p class="ai-block__text">{{ ai.videoUnderstanding.summary }}</p>
+            </div>
+
+            <div class="ai-meta-grid">
+              <div class="ai-meta-item">
+                <span class="ai-meta-label">Objetivo da Campanha</span>
+                <span class="ai-meta-val">{{ ai.videoUnderstanding.campaignGoal }}</span>
+              </div>
+              <div class="ai-meta-item">
+                <span class="ai-meta-label">Tom Detectado</span>
+                <span class="ai-meta-val">{{ ai.videoUnderstanding.detectedTone }}</span>
+              </div>
+              <div class="ai-meta-item ai-meta-item--full">
+                <span class="ai-meta-label">Público-Alvo Estimado</span>
+                <span class="ai-meta-val">{{ ai.videoUnderstanding.targetAudience }}</span>
+              </div>
+            </div>
+          </div>
+        </emi-card>
+
+        <!-- 2. Reações da Audiência -->
+        <emi-card title="Análise das Reações do Público" subtitle="Percepção coletiva e tópicos críticos">
+          <div class="emi-ai-card-content">
+            <div class="ai-block">
+              <span class="ai-block__tag">Clima Emocional Geral</span>
+              <p class="ai-block__text">{{ ai.audienceReactions.generalTone }}</p>
+            </div>
+
+            <div class="reactions-split">
+              <div class="reaction-group positive-group">
+                <div class="reaction-group__header">
+                  <emi-icon name="trending-up" [size]="16"></emi-icon>
+                  <span>Principais Elogios</span>
+                </div>
+                <ul>
+                  @for (item of ai.audienceReactions.positiveHighlights; track item) {
+                    <li>{{ item }}</li>
+                  }
+                </ul>
+              </div>
+
+              <div class="reaction-group negative-group">
+                <div class="reaction-group__header">
+                  <emi-icon name="alert" [size]="16"></emi-icon>
+                  <span>Dores & Objeções Mais Citadas</span>
+                </div>
+                <ul>
+                  @for (item of ai.audienceReactions.negativeObjections; track item) {
+                    <li>{{ item }}</li>
+                  }
+                </ul>
+              </div>
+            </div>
+          </div>
+        </emi-card>
+      </div>
+
+      <!-- 3. Insights Acionáveis para a Empresa -->
+      <section class="emi-insights-section">
+        <emi-card title="Insights Acionáveis para Tomada de Decisão" subtitle="Recomendações estratégicas geradas pela IA para otimização da campanha">
+          <div class="insights-list">
+            @for (insight of ai.actionableInsights; track insight; let i = $index) {
+              <div class="insight-item">
+                <div class="insight-num">#{{ i + 1 }}</div>
+                <div class="insight-content">
+                  <p>{{ insight }}</p>
+                </div>
+              </div>
+            }
+          </div>
+        </emi-card>
+      </section>
+
+      <!-- 4. Auditoria de Comentários Classificados -->
+      <section class="emi-comments-section">
+        <emi-card title="Comentários Coletados & Classificação da IA" subtitle="Auditoria individual de comentários com sentimento, tema e justificativa">
+          <!-- Filtro de Sentimentos -->
+          <div class="comments-filter-bar">
+            <span class="filter-label">Filtrar por Sentimento:</span>
+            <div class="filter-buttons">
+              <button
+                type="button"
+                class="filter-pill"
+                [class.filter-pill--active]="activeSentimentFilter() === 'Todos'"
+                (click)="setFilter('Todos')"
+              >
+                Todos ({{ ai.comments.length }})
+              </button>
+              <button
+                type="button"
+                class="filter-pill filter-pill--positive"
+                [class.filter-pill--active]="activeSentimentFilter() === 'Positivo'"
+                (click)="setFilter('Positivo')"
+              >
+                Positivos
+              </button>
+              <button
+                type="button"
+                class="filter-pill filter-pill--neutral"
+                [class.filter-pill--active]="activeSentimentFilter() === 'Neutro'"
+                (click)="setFilter('Neutro')"
+              >
+                Neutros
+              </button>
+              <button
+                type="button"
+                class="filter-pill filter-pill--negative"
+                [class.filter-pill--active]="activeSentimentFilter() === 'Negativo'"
+                (click)="setFilter('Negativo')"
+              >
+                Negativos
+              </button>
+            </div>
+          </div>
+
+          <!-- Feed de Comentários -->
+          <div class="comments-stream">
+            @for (comment of filteredComments(); track comment.id) {
+              <div class="comment-card">
+                <div class="comment-card__header">
+                  <div class="author-area">
+                    <div class="author-avatar">{{ comment.author.charAt(0) }}</div>
+                    <div>
+                      <span class="author-name">{{ comment.author }}</span>
+                      <span class="comment-time">{{ comment.publishedAt }}</span>
+                    </div>
+                  </div>
+
+                  <div class="comment-tags">
+                    <emi-badge
+                      [variant]="
+                        comment.sentiment === 'Positivo'
+                          ? 'success'
+                          : comment.sentiment === 'Neutro'
+                            ? 'warning'
+                            : 'danger'
+                      "
+                    >
+                      {{ comment.sentiment }}
+                    </emi-badge>
+                    <span class="theme-pill">Tema: {{ comment.theme }}</span>
+                  </div>
+                </div>
+
+                <p class="comment-text">"{{ comment.text }}"</p>
+
+                <div class="ai-justification-box">
+                  <div class="justification-label">
+                    <emi-icon name="check" [size]="14"></emi-icon>
+                    <strong>Justificativa da IA (Gemini):</strong>
+                  </div>
+                  <p class="justification-text">{{ comment.aiJustification }}</p>
+                </div>
+              </div>
+            } @empty {
+              <div class="comments-empty">
+                <p>Nenhum comentário encontrado com o filtro selecionado.</p>
+              </div>
+            }
+          </div>
+        </emi-card>
+      </section>
+    }
+  } @else {
+    <div class="emi-not-found">
+      <h2>Modelo não encontrado</h2>
+      <a routerLink="/dashboard" class="emi-btn-back">Voltar ao Dashboard</a>
+    </div>
+  }
+</div>
+
